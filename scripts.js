@@ -1,6 +1,6 @@
 let currentPlayer;
 
-const gameBoard = ((currentPlayer) => {
+const gameBoard = (() => {
     const gameBoardElement = document.querySelector(".gameboard");
     let gameBoardContent = [];
 
@@ -10,10 +10,10 @@ const gameBoard = ((currentPlayer) => {
             gameBoardElement.removeChild(gameBoardElement.firstChild)
         }
         // create each board block with event listeners that will change the state of the board based on the current player
-        for (let i = 0; i > 9; i++) {
+        for (let i = 0; i < 9; i++) {
             gameBoardContent.push("");
             let block = document.createElement("div");
-            block.classList.add("boardBlock");
+            block.classList.add("board-block");
             block.dataset.index = i;
             block.addEventListener('click', () => {
                 if (block.innerHTML != ""){
@@ -39,7 +39,11 @@ const gameBoard = ((currentPlayer) => {
             counter++;
         }
     }
+    return {createNewBoard, displayBoardContent}
 })();
+
+gameBoard.createNewBoard();
+
 
 const createPlayer = (name) => {
     const winMessage = `Congrats ${name}! You Win`;
@@ -48,7 +52,7 @@ const createPlayer = (name) => {
 }
 
 const gameFlow = (() => {
-    
+
 
 })();
 
