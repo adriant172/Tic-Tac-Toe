@@ -41,5 +41,14 @@ const gameBoard = ((currentPlayer) => {
     }
 })();
 
+const createPlayer = (name) => {
+    const winMessage = `Congrats ${name}! You Win`;
 
+    return {name, winMessage}
+}
+
+const gameFlow = (() => {
+    
+
+})();
 
