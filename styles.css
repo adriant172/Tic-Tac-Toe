@@ -5,7 +5,8 @@ body {
     align-items: center;
 }
 
-.gameboard {
+.gameboard-on {
+    margin-top: 3rem;
     height: 800px;
     width: 800px;
     display: grid;
