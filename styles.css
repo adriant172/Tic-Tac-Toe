@@ -19,4 +19,11 @@ body {
 
 .board-block {
     background-color: white;
+    font-size: 4rem;
+    text-align: center;
+}
+.current-player {
+    height: 2rem;
+    width: 4rem;
+    border: solid black 2px;
 }

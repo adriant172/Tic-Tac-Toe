@@ -1,17 +1,22 @@
-let currentPlayer;
 
 const gameBoard = (() => {
     const gameBoardElement = document.querySelector(".gameboard");
-    let gameBoardContent = [];
+    let gameBoardStates = [];
+    let state = () => {
+        let selected = false;
+        let by = "";
+        return {selected, by}
+    }
 
     const createNewBoard = () => {
         // Clear any previous board
         while (gameBoardElement.firstChild){
             gameBoardElement.removeChild(gameBoardElement.firstChild)
         }
+        
         // create each board block with event listeners that will change the state of the board based on the current player
         for (let i = 0; i < 9; i++) {
-            gameBoardContent.push("");
+            gameBoardStates.push(state);
             let block = document.createElement("div");
             block.classList.add("board-block");
             block.dataset.index = i;
@@ -40,29 +45,27 @@ const gameBoard = (() => {
             counter++;
         }
     }
-    return {createNewBoard, displayBoardContent}
+    return {createNewBoard, displayBoardContent, gameBoardStates}
 })();
 
 // gameBoard.createNewBoard();
 
 
-const createPlayer = (name) => {
+const createPlayer = (name, marker) => {
     const winMessage = `Congrats ${name}! You Win`;
+    
 
-    return {name, winMessage}
+    return {name, winMessage, marker}
 }
+
 
 const gameFlow = (() => {
     const newGame = document.querySelector('.new-game-button');
-    const player1 = createPlayer("matt");
-    const player2 = createPlayer("computer");
+    let gameBoardContent = [];
 
-    const start = () => { newGame.addEventListener('click', () => {
-        gameBoard.createNewBoard();
-        startGame();
-    })} 
-
-    
+    const player1 = createPlayer("matt", "X");
+    const player2 = createPlayer("computer", "O");
+    let currentPlayer = player1;
 
     const changeTurns = () => {
         if (currentPlayer === player1) {
@@ -71,32 +74,31 @@ const gameFlow = (() => {
         if (currentPlayer === player2){
             currentPlayer = player1;
         }
+        console.log("current player is" + currentPlayer)
     }
-
+    
     const startGame = () => {
-        const boardBlocks = document.querySelectorAll('.boardBlock');
-        currentPlayer = player1;
+        const boardBlocks = document.querySelectorAll('.board-block');
         boardBlocks.forEach(item => {
             item.addEventListener('click', () => {
                 if (item.innerHTML != ""){
                     return
+                } else {
+                    gameBoard.gameBoardContent[item.dataset.index] = currentPlayer.marker;
+                    
                 }
-                if (currentPlayer == "player1"){
-                    gameBoardContent[item.dataset.index] = "X";
-                    changeTurns()
-                }
-                if (currentPlayer == "player2") {
-                    gameBoardContent[item.dataset.index] = "O";
-                    changeTurns()
-                }
-                displayBoardContent(boardBlocks);
+                gameBoard.displayBoardContent(boardBlocks);      
+                
             })
+            changeTurns();
         })
-
+    
     }
-    return {start}
+
+    newGame.addEventListener('click', () => {
+        gameBoard.createNewBoard();
+        startGame();
+    })
 
 })();
-
-gameFlow();
 
