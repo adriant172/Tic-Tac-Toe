@@ -1,12 +1,11 @@
+let state = (selected, by) => {
+    return {selected, by}
+}
+let currentPlayer;
 
 const gameBoard = (() => {
     const gameBoardElement = document.querySelector(".gameboard");
     let gameBoardStates = [];
-    let state = () => {
-        let selected = false;
-        let by = "";
-        return {selected, by}
-    }
 
     const createNewBoard = () => {
         // Clear any previous board
@@ -14,67 +13,65 @@ const gameBoard = (() => {
             gameBoardElement.removeChild(gameBoardElement.firstChild)
         }
         
-        // create each board block with event listeners that will change the state of the board based on the current player
+        // set game board states array to contain state objects that all default to selected equals false
         for (let i = 0; i < 9; i++) {
-            gameBoardStates.push(state);
+            gameBoardStates.push(state(false));
             let block = document.createElement("div");
             block.classList.add("board-block");
             block.dataset.index = i;
-            // block.addEventListener('click', () => {
-            //     if (block.innerHTML != ""){
-            //         return
-            //     }
-            //     if (currentPlayer == "player1"){
-            //         gameBoardContent[block.dataset.index] = "X";
-            //     }
-            //     if (currentPlayer == "player2") {
-            //         gameBoardContent[block.dataset.index] = "O";
-            //     }
-            //     displayBoardContent();
-            // })
             gameBoardElement.appendChild(block);
         }
         gameBoardElement.classList.add('gameboard-on');
     }
-
-    const displayBoardContent = (boardBlocks) => {
-        // const boardBlocks = document.querySelectorAll('.boardBlock');
-        let counter = 0;
-        for (block of boardBlocks){
-            block.innerHTML = gameBoardContent[counter];
-            counter++;
-        }
-    }
-    return {createNewBoard, displayBoardContent, gameBoardStates}
+    return {createNewBoard, gameBoardStates}
 })();
 
-// gameBoard.createNewBoard();
 
 
-const createPlayer = (name, marker) => {
+const displayController = (() => {
+    function displayContent(boardBlocks){
+        // const boardBlocks = document.querySelectorAll('.boardBlock');
+        let gameBoardContent = [];
+        for (let i = 0; i < gameBoard.gameBoardStates.length; i++) {
+            if (gameBoard.gameBoardStates[i].selected === true) {
+                if(currentPlayer.playerNum == 1) {
+                    gameBoardContent.push("X");
+                } else {
+                    gameBoardContent.push("O");
+                }
+            }
+        }
+        for (block of boardBlocks){
+            block.innerHTML = gameBoardContent[block.dataset.index];
+        }
+    }
+    return{displayContent}
+})();
+
+
+const createPlayer = (name, playerNum) => {
     const winMessage = `Congrats ${name}! You Win`;
-    
-
-    return {name, winMessage, marker}
+    return {name, winMessage, playerNum}
 }
 
 
 const gameFlow = (() => {
     const newGame = document.querySelector('.new-game-button');
-    let gameBoardContent = [];
+    let currentPlayerDisplay = document.querySelector('.current-player');
+    
+    const player1 = createPlayer("matt", 1);
+    const player2 = createPlayer("computer", 2);
+    currentPlayer = player1;
 
-    const player1 = createPlayer("matt", "X");
-    const player2 = createPlayer("computer", "O");
-    let currentPlayer = player1;
-
-    const changeTurns = () => {
+    function changeTurns() {
         if (currentPlayer === player1) {
             currentPlayer = player2;
         }
         if (currentPlayer === player2){
             currentPlayer = player1;
         }
-        console.log("current player is" + currentPlayer)
+        currentPlayerDisplay.innerHTML = currentPlayer.name;
+        console.log("current player is" + currentPlayer.name)
     }
     
     const startGame = () => {
@@ -84,10 +81,10 @@ const gameFlow = (() => {
                 if (item.innerHTML != ""){
                     return
                 } else {
-                    gameBoard.gameBoardContent[item.dataset.index] = currentPlayer.marker;
+                    gameBoard.gameBoardStates[item.dataset.index] = state(true, currentPlayer.name);
                     
                 }
-                gameBoard.displayBoardContent(boardBlocks);      
+                displayController.displayContent(boardBlocks);      
                 
             })
             changeTurns();
