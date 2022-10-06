@@ -34,11 +34,13 @@ const displayController = (() => {
         let gameBoardContent = [];
         for (let i = 0; i < gameBoard.gameBoardStates.length; i++) {
             if (gameBoard.gameBoardStates[i].selected === true) {
-                if(currentPlayer.playerNum == 1) {
+                if(gameBoard.gameBoardStates[i].by == 1) {
                     gameBoardContent.push("X");
                 } else {
                     gameBoardContent.push("O");
                 }
+            }else {
+                gameBoardContent.push("");
             }
         }
         for (block of boardBlocks){
@@ -62,32 +64,38 @@ const gameFlow = (() => {
     const player1 = createPlayer("matt", 1);
     const player2 = createPlayer("computer", 2);
     currentPlayer = player1;
+    
 
     function changeTurns() {
-        if (currentPlayer === player1) {
+        if (currentPlayer.playerNum === 1) {
             currentPlayer = player2;
+            return
         }
-        if (currentPlayer === player2){
+        if (currentPlayer.playerNum === 2){
             currentPlayer = player1;
+            return
         }
-        currentPlayerDisplay.innerHTML = currentPlayer.name;
-        console.log("current player is" + currentPlayer.name)
     }
     
     const startGame = () => {
+        currentPlayerDisplay.innerHTML = currentPlayer.name;
         const boardBlocks = document.querySelectorAll('.board-block');
         boardBlocks.forEach(item => {
             item.addEventListener('click', () => {
                 if (item.innerHTML != ""){
                     return
                 } else {
-                    gameBoard.gameBoardStates[item.dataset.index] = state(true, currentPlayer.name);
+                    gameBoard.gameBoardStates[item.dataset.index] = state(true, currentPlayer.playerNum);
                     
                 }
-                displayController.displayContent(boardBlocks);      
+                displayController.displayContent(boardBlocks);
+                changeTurns();
+                currentPlayerDisplay.innerHTML = currentPlayer.name;
+                console.log("current player is " + currentPlayer.name)
+            
                 
             })
-            changeTurns();
+            
         })
     
     }
