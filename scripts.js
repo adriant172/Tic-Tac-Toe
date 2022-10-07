@@ -65,6 +65,22 @@ const gameFlow = (() => {
     const player2 = createPlayer("computer", 2);
     currentPlayer = player1;
     
+    function winCheck() {
+        const playerPlacement = gameBoard.gameBoardStates.map( x => {
+            return x.by
+        })
+        const winCombinations = [[0,1,2], [3,4,5], [6,7,8], [0,4,8], [2,4,6], [0,3,6], [1,4,7], [2,5,8]];
+        for (let i = 0; i < winCombinations.length; i++) {
+            let gameBoardSlice = winCombinations[i].map(x => playerPlacement[x])
+            if (gameBoardSlice === [1, 1, 1]) {
+                return 1
+            }
+            if (gameBoardSlice === [2,2,2]) {
+                return 2
+            }
+        }
+        return 0
+    }
 
     function changeTurns() {
         if (currentPlayer.playerNum === 1) {
@@ -89,7 +105,15 @@ const gameFlow = (() => {
                     
                 }
                 displayController.displayContent(boardBlocks);
+
                 changeTurns();
+                let result = winCheck();
+                if (result == 1) {
+                    alert(player1.winMessage())
+                }
+                if (result == 2) {
+                    alert(player2.winMessage())
+                }
                 currentPlayerDisplay.innerHTML = currentPlayer.name;
                 console.log("current player is " + currentPlayer.name)
             
@@ -105,5 +129,6 @@ const gameFlow = (() => {
         startGame();
     })
 
+    return {winCheck}
 })();
 
