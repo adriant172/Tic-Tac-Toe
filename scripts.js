@@ -64,7 +64,15 @@ const gameFlow = (() => {
     const player1 = createPlayer("matt", 1);
     const player2 = createPlayer("computer", 2);
     currentPlayer = player1;
-    
+
+    function arrayEquals(a, b) {
+        return Array.isArray(a) &&
+          Array.isArray(b) &&
+          a.length === b.length &&
+          a.every((val, index) => val === b[index]);
+      }
+
+
     function winCheck() {
         const playerPlacement = gameBoard.gameBoardStates.map( x => {
             return x.by
@@ -72,14 +80,14 @@ const gameFlow = (() => {
         const winCombinations = [[0,1,2], [3,4,5], [6,7,8], [0,4,8], [2,4,6], [0,3,6], [1,4,7], [2,5,8]];
         for (let i = 0; i < winCombinations.length; i++) {
             let gameBoardSlice = winCombinations[i].map(x => playerPlacement[x])
-            if (gameBoardSlice === [1, 1, 1]) {
+            if (arrayEquals(gameBoardSlice, [1, 1, 1])) {
                 return 1
             }
-            if (gameBoardSlice === [2,2,2]) {
+            if (arrayEquals(gameBoardSlice, [2,2,2])) {
                 return 2
             }
         }
-        return 0
+        
     }
 
     function changeTurns() {
@@ -108,12 +116,12 @@ const gameFlow = (() => {
 
                 changeTurns();
                 let result = winCheck();
-                if (result == 1) {
-                    alert(player1.winMessage())
+                setTimeout(() => {if (result == 1) {
+                    alert(player1.winMessage)
                 }
                 if (result == 2) {
-                    alert(player2.winMessage())
-                }
+                    alert(player2.winMessage)
+                }}, 250)
                 currentPlayerDisplay.innerHTML = currentPlayer.name;
                 console.log("current player is " + currentPlayer.name)
             
