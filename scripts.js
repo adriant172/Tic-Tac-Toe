@@ -102,8 +102,17 @@ const gameFlow = (() => {
     }
     
     const startGame = () => {
-        currentPlayerDisplay.innerHTML = currentPlayer.name;
+        currentPlayerDisplay.innerHTML = currentPlayer.name + " please begin!";
         const boardBlocks = document.querySelectorAll('.board-block');
+        const overlay = document.querySelector('.overlay')
+        const gameOverPrompt = document.querySelector('.gameover-message');
+        const resetButton = document.querySelector('.reset-game');
+
+        resetButton.addEventListener('click', () => {
+            overlay.style.display = "";
+            gameBoard.createNewBoard();
+            currentPlayer = player1
+        })
         boardBlocks.forEach(item => {
             item.addEventListener('click', () => {
                 if (item.innerHTML != ""){
@@ -117,14 +126,16 @@ const gameFlow = (() => {
                 changeTurns();
                 let result = winCheck();
                 setTimeout(() => {if (result == 1) {
-                    alert(player1.winMessage)
+                    overlay.style.display = "flex";
+                    gameOverPrompt.innerHTML = player1.winMessage;
                 }
                 if (result == 2) {
-                    alert(player2.winMessage)
+                    overlay.style.display = "flex";
+                    gameOverPrompt.innerHTML = player2.winMessage;
                 }}, 250)
-                currentPlayerDisplay.innerHTML = currentPlayer.name;
+                currentPlayerDisplay.innerHTML = currentPlayer.name + "'s turn";
                 console.log("current player is " + currentPlayer.name)
-            
+
                 
             })
             
