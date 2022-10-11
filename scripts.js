@@ -6,6 +6,7 @@ let currentPlayer;
 const gameBoard = (() => {
     const gameBoardElement = document.querySelector(".gameboard");
     let gameBoardStates = [];
+    
 
     const createNewBoard = () => {
         // Clear any previous board
@@ -15,13 +16,14 @@ const gameBoard = (() => {
         
         // set game board states array to contain state objects that all default to selected equals false
         for (let i = 0; i < 9; i++) {
-            gameBoardStates.push(state(false));
+            gameBoardStates[i] = state(false);
             let block = document.createElement("div");
             block.classList.add("board-block");
             block.dataset.index = i;
             gameBoardElement.appendChild(block);
         }
         gameBoardElement.classList.add('gameboard-on');
+        
     }
     return {createNewBoard, gameBoardStates}
 })();
@@ -111,7 +113,8 @@ const gameFlow = (() => {
         resetButton.addEventListener('click', () => {
             overlay.style.display = "";
             gameBoard.createNewBoard();
-            currentPlayer = player1
+            currentPlayer = player1;
+            startGame();
         })
         boardBlocks.forEach(item => {
             item.addEventListener('click', () => {
@@ -128,6 +131,7 @@ const gameFlow = (() => {
                 setTimeout(() => {if (result == 1) {
                     overlay.style.display = "flex";
                     gameOverPrompt.innerHTML = player1.winMessage;
+                    
                 }
                 if (result == 2) {
                     overlay.style.display = "flex";
@@ -146,6 +150,7 @@ const gameFlow = (() => {
     newGame.addEventListener('click', () => {
         gameBoard.createNewBoard();
         startGame();
+
     })
 
     return {winCheck}
