@@ -92,6 +92,16 @@ const gameFlow = (() => {
         
     }
 
+    function tieCheck() {
+        const gameBoardStates = gameBoard.gameBoardStates
+        for (block of gameBoardStates) {
+            if (block.selected == false) {
+                return 0
+            }  
+        }
+        return 1
+    }
+
     function changeTurns() {
         if (currentPlayer.playerNum === 1) {
             currentPlayer = player2;
@@ -127,19 +137,25 @@ const gameFlow = (() => {
                 displayController.displayContent(boardBlocks);
 
                 changeTurns();
-                let result = winCheck();
-                setTimeout(() => {if (result == 1) {
+                let winResult = winCheck();
+                let tieResult = tieCheck();
+
+                setTimeout(() => {if (winResult == 1) {
                     overlay.style.display = "flex";
                     gameOverPrompt.innerHTML = player1.winMessage;
                     
                 }
-                if (result == 2) {
+                if (winResult == 2) {
                     overlay.style.display = "flex";
                     gameOverPrompt.innerHTML = player2.winMessage;
-                }}, 250)
+                }
+                if (tieResult == 1) {
+                    overlay.style.display = "flex";
+                    gameOverPrompt.innerHTML = "Looks like its a Tie!!"
+                }
+            }, 250)
                 currentPlayerDisplay.innerHTML = currentPlayer.name + "'s turn";
                 console.log("current player is " + currentPlayer.name)
-
                 
             })
             

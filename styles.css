@@ -9,8 +9,8 @@ body {
 
 .gameboard-on {
     margin-top: 3rem;
-    height: 800px;
-    width: 800px;
+    height: 600px;
+    width: 600px;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: repeat(3, minmax(0, 1fr));
@@ -21,9 +21,12 @@ body {
 }
 
 .board-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: #3185FC;
-    font-size: 4rem;
-    text-align: center;
+    font-size: 8rem;
 }
 .current-player {
     margin-top: 10px;
