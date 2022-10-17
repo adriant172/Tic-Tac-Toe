@@ -9,20 +9,25 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
-
-    <button class="new-game-button">New Game</button>
+    
+    <button class="two-player-game">2 Player Game</button>
     <form id="player-names">
         <label for="player1">Player 1 Name: </label>
         <input type="text" name="player1" id="player1">
 
         <label for="player2">Player 2 Name: </label>
         <input type="text" name="player2" id="player2">
+        <button type="button" class="start-game-button">Start Game</button>
     </form>
     <div class="current-player"></div>
     <div class="overlay">
         <div class="gameover">
             <div class="gameover-message"></div>
-            <button class="reset-game">Reset</button>
+            <div class="gameover-buttons" >
+                <button class="game-over-button two-player-game">New 2 Player Game</button>
+                <button class="reset-game">Reset</button>
+            </div>
+            
         </div> 
     </div>
     <div class="gameboard">

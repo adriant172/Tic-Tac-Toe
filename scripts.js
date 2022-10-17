@@ -7,12 +7,16 @@ const gameBoard = (() => {
     const gameBoardElement = document.querySelector(".gameboard");
     let gameBoardStates = [];
     
-
-    const createNewBoard = () => {
-        // Clear any previous board
+    const clearBoard = () => {
         while (gameBoardElement.firstChild){
             gameBoardElement.removeChild(gameBoardElement.firstChild)
         }
+        gameBoardElement.classList.remove('gameboard-on')
+    }
+
+    const createNewBoard = () => {
+        // Clear any previous board
+        clearBoard();
         
         // set game board states array to contain state objects that all default to selected equals false
         for (let i = 0; i < 9; i++) {
@@ -25,7 +29,7 @@ const gameBoard = (() => {
         gameBoardElement.classList.add('gameboard-on');
         
     }
-    return {createNewBoard, gameBoardStates}
+    return {createNewBoard, gameBoardStates, clearBoard}
 })();
 
 
@@ -60,12 +64,14 @@ const createPlayer = (name, playerNum) => {
 
 
 const gameFlow = (() => {
-    const newGame = document.querySelector('.new-game-button');
+    const twoPlayerGame = document.querySelector('.two-player-game');
+    const startGameButton = document.querySelector('.start-game-button');
+    const playerNameInput = document.querySelector('#player-names');
     let currentPlayerDisplay = document.querySelector('.current-player');
     
-    const player1 = createPlayer("matt", 1);
-    const player2 = createPlayer("computer", 2);
-    currentPlayer = player1;
+    let player1;
+    let player2;
+    // currentPlayer = player1;
 
     function arrayEquals(a, b) {
         return Array.isArray(a) &&
@@ -119,13 +125,22 @@ const gameFlow = (() => {
         const overlay = document.querySelector('.overlay')
         const gameOverPrompt = document.querySelector('.gameover-message');
         const resetButton = document.querySelector('.reset-game');
+        const twoPlayerGameOverButton = document.querySelector('.game-over-button');
+        
 
+        twoPlayerGameOverButton.addEventListener('click', () => {
+            overlay.style.display = "";
+            playerNameInput.style.display = "flex";
+            gameBoard.clearBoard()
+            currentPlayerDisplay.innerHTML = "";
+        })
         resetButton.addEventListener('click', () => {
             overlay.style.display = "";
             gameBoard.createNewBoard();
             currentPlayer = player1;
             startGame();
         })
+
         boardBlocks.forEach(item => {
             item.addEventListener('click', () => {
                 if (item.innerHTML != ""){
@@ -163,9 +178,31 @@ const gameFlow = (() => {
     
     }
 
-    newGame.addEventListener('click', () => {
+    twoPlayerGame.addEventListener('click', () => {
+        playerNameInput.style.display = "flex";
+
+    })
+
+    startGameButton.addEventListener('click', () => {
+        let playerOneName = document.querySelector('#player1');
+        let playerTwoName = document.querySelector('#player2');
+        if (playerOneName.value == "") {
+            playerOneName.value = "Player 1";
+        }
+        if (playerTwoName.value == "") {
+            playerTwoName.value = "Player 2";
+        }
+
+        player1 = createPlayer(playerOneName.value, 1);
+        player2 = createPlayer(playerTwoName.value, 2);
+        currentPlayer = player1;
+
         gameBoard.createNewBoard();
         startGame();
+        playerNameInput.style.display = "";
+        playerOneName.value = "";
+        playerTwoName.value = "";
+
 
     })
 
