@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap');
+
+
 body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #3185FC;
+    background-color: #e5f4e3;
+    font-family: 'Oswald', sans-serif;
     color: #403F4C;
 }
 #player-names {
@@ -34,14 +38,14 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #3185FC;
+    background-color: #e5f4e3;
     font-size: 8rem;
 }
 .current-player {
     margin-top: 10px;
     height: 2rem;
     width: 200px;
-    border: solid black 2px;
+    /* border: solid black 2px; */
     border-radius: 10px;
     text-align: center;
 }
@@ -75,13 +79,23 @@ body {
     display: flex;
     justify-content:space-between;
 }
+button {
+    background-color: #5B8E7D;
+    color: #e5f4e3;
+}
 .two-player-game {
     width: 150px;
     height: 30px;
     border-radius: 15px;
+    
 }
 .reset-game {
     width: 150px;
     height: 30px;
     border-radius: 15px;
+    
+}
+.start-game-button {
+    border-radius: 15px;
+    
 }

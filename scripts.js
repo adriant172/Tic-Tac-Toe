@@ -71,6 +71,7 @@ const gameFlow = (() => {
     
     let player1;
     let player2;
+    let players;
     // currentPlayer = player1;
 
     function arrayEquals(a, b) {
@@ -137,7 +138,7 @@ const gameFlow = (() => {
         resetButton.addEventListener('click', () => {
             overlay.style.display = "";
             gameBoard.createNewBoard();
-            currentPlayer = player1;
+            currentPlayer = players[Math.floor(Math.random()*players.length)];
             startGame();
         })
 
@@ -195,7 +196,8 @@ const gameFlow = (() => {
 
         player1 = createPlayer(playerOneName.value, 1);
         player2 = createPlayer(playerTwoName.value, 2);
-        currentPlayer = player1;
+        players = [player1, player2];
+        currentPlayer = players[Math.floor(Math.random()*players.length)];
 
         gameBoard.createNewBoard();
         startGame();
