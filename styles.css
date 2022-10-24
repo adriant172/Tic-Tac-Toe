@@ -25,11 +25,11 @@ h1 {
 
 .gameboard-on {
     margin-top: 3rem;
-    height: 50vh;
-    width: 40vw;
+    height:40vh;
+    min-width: 40%;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     background-color: #403F4C;
     gap: 3px;
     color: #E84855;
@@ -42,7 +42,7 @@ h1 {
     justify-content: center;
     align-items: center;
     background-color: #e5f4e3;
-    font-size: 8rem;
+    font-size: 2.5em;
 }
 .current-player {
     margin-top: 10px;
@@ -76,30 +76,37 @@ h1 {
     border: solid 1px;
     width: 30vw;
     height: 30vh;
-    font-size: 24px;
+    font-size: 1.5rem;
 }
 .gameover-buttons {
-    width: 60%;
+    width: 30vw;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
 }
 button {
     background-color: #5B8E7D;
     color: #e5f4e3;
+
 }
 .two-player-game {
-    width: 150px;
-    height: 30px;
     border-radius: 15px;
+    font-size: 2vw;
+    display: flex;
+    flex-wrap: wrap;
     
 }
 .reset-game {
-    width: 150px;
-    height: 30px;
+    font-size: 2vw;
     border-radius: 15px;
     
 }
 .start-game-button {
     border-radius: 15px;
     
+}
+.gameover-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .50em;
 }
