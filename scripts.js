@@ -126,7 +126,7 @@ const gameFlow = (() => {
         const overlay = document.querySelector('.overlay')
         const gameOverPrompt = document.querySelector('.gameover-message');
         const resetButton = document.querySelector('.reset-game');
-        const twoPlayerGameOverButton = document.querySelector('.game-over-button');
+        const twoPlayerGameOverButton = document.querySelector('.reset-players');
         
 
         twoPlayerGameOverButton.addEventListener('click', () => {
@@ -181,6 +181,7 @@ const gameFlow = (() => {
 
     twoPlayerGame.addEventListener('click', () => {
         playerNameInput.style.display = "flex";
+        twoPlayerGame.style.display = "none"
 
     })
 

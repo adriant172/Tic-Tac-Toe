@@ -81,32 +81,24 @@ h1 {
 .gameover-buttons {
     width: 30vw;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 button {
     background-color: #5B8E7D;
     color: #e5f4e3;
+    font-size: .75vw;
+    border-radius: 15px;
+    min-width: 40%;
 
 }
 .two-player-game {
-    border-radius: 15px;
-    font-size: 2vw;
     display: flex;
-    flex-wrap: wrap;
     
 }
-.reset-game {
-    font-size: 2vw;
-    border-radius: 15px;
-    
-}
-.start-game-button {
-    border-radius: 15px;
-    
-}
+
 .gameover-message {
     display: flex;
     justify-content: center;
-    align-items: center;
-    font-size: .50em;
+    text-align: center;
+    font-size: 1em;
 }
